@@ -49,7 +49,7 @@ module.exports = getConfig({
 * `out` (required) - Path to directory where we're going to put generated files.
 
 
-### Step 3: configure scripts
+#### Step 3: configure scripts
 
 in `package.json`:
 
@@ -63,7 +63,7 @@ in `package.json`:
 }
 ```
 
-### Step 4: Build
+#### Step 4: Build
 Open up your terminal and cd into the root of your project directory where `webpack.config.js` is.
 
 Run your dev script:
