@@ -19,6 +19,7 @@ For deployment:
 + Outputs uniquely named (hashed) static js & css files
 + dynamically generate customized index.html to match hashed static files
 
+Project structure:
 Henrik Joreteg has a fabulous webpack configuration ([hjs-webpack](https://github.com/HenrikJoreteg/hjs-webpack)) that does pretty much this, and we heavily borrowed from his work. In addition though, we wanted to build in support for customized project structures such as:
 * Ryan Florence's [approach](https://gist.github.com/ryanflorence/daafb1e3cb8ad740b346) to organizing scalable, modular, team-centric react apps.
 * Twitter's component-centric organizational [approach](http://www.thedotpost.com/2014/11/nicolas-gallagher-thinking-beyond-scalable-css) led by Nicolas Gallagher.
@@ -77,4 +78,12 @@ Run your build script
 
 After some magic webpack bundling work, this will output minified, hashed, production ready files for your app in the specified `out` directory
 
+
+### Additional Config options
+
+#### html
+
+#### vendors
+
+#### resolves
 
