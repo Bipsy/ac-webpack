@@ -81,7 +81,93 @@ After some magic webpack bundling work, this will output minified, hashed, produ
 
 ### Additional Config options
 
-#### html
+#### html (optional, object)
+You have the option to build your own dev & production html. This is done by passing in an `html` property into the config with the properties `dev` && / || `prod`.
+
+If html.dev || html.prod are _not_ present, the following default html template will be used (production will also have a css link):
+
+```html
+<!doctype html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="bundle.js"></script>
+</body>
+```
+
+##### Examples
+This part of the api needs additional love, thought and attention. For now, I recommend borrowing heavily from the following examples. 
+
+* Note `dev` receives only a `.main` property representing the entirety of the app's javascript. `dev` has no css file because all css scripts will be placed in the head by webpack. 
+
+* `prod` receives {css, app[, vendors]} where `css` is the name of the hashed, concatenated, & minified css file, `app` is the named of the js file containing all of the app's javascript minus any node_moudles that may be specified as `vendors`. All of these files are concatenated, minified, & hashed.
+
+```js
+html: {
+  dev: function (data) {
+    return {
+      'index.html': [
+        '<html>',
+          '<head>',
+            '<meta charset="utf-8"/>',
+            '<meta name="viewport" content="width=device-width, initial-scale=1">',
+            '<link href="http://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" type="text/css">',
+          '</head>',
+          '<body>',
+            '<div id="app"></div>',
+            '<script src="/' + data.main + '"></script>',
+          '</body>',
+        '</html>'
+      ].join('')
+    }
+  },
+  prod: function (data) {
+      var config = {
+        title: 'Ac Example App',
+        favicon: '/assets/icons/favicon.ico',
+        gaId: '',
+        errorceptionId: ''
+      }
+
+      return {
+        'index.html': [
+          '<html>',
+            '<head>',
+              '<meta charset="utf-8"/>',
+              '<meta name="viewport" content="width=device-width, initial-scale=1">',
+              '<title>' + config.title + '</title>',
+              '<link rel="icon" href="' + config.favicon + '" type="image/x-icon" />',
+              '<link href="/' + data.css + '" rel="stylesheet" type="text/css" />',
+              '<link href="http://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" type="text/css">',
+
+              '<script>(function(_,e,rr,s){_errs=[s];var c=_.onerror;_.onerror=function(){var a=arguments;_errs.push(a);' +
+              'c&&c.apply(this,a)};var b=function(){var c=e.createElement(rr),b=e.getElementsByTagName(rr)[0];' +
+              'c.src="//beacon.errorception.com/"+s+".js";c.async=!0;b.parentNode.insertBefore(c,b)};' +
+              '_.addEventListener?_.addEventListener("load",b,!1):_.attachEvent("onload",b)})' +
+              '(window,document,"script","' + config.errorceptionId + '");</script>',
+
+              '<script>(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){' +
+              '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),' +
+              'm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)' +
+              '})(window,document,"script","//www.google-analytics.com/analytics.js","ga");' +
+
+              'ga("create", "' + config.gaId + '", "auto");</script>',
+            '</head>',
+            '<body>',
+              '<div id="app"></div>',
+              '<script src="/' + data.vendors + '"></script>',
+              '<script src="/' + data.app + '"></script>',
+            '</body>',
+          '</html>'
+        ].join('')
+      }
+    }
+}
+ 
+```
 
 #### vendors
 
