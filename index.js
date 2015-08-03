@@ -30,7 +30,7 @@ module.exports = function (opts) {
     },
     resolves: null,
     isDev: isDev,
-    html: opts.html
+    html: {}
   })
 
   config = getBaseConfig(spec)
@@ -91,9 +91,9 @@ module.exports = function (opts) {
  * Throws error if required opts aren't provided
  */
 function _checkRequired (opts) {
-  var props = ['out', 'in', 'html']
+  var props = ['out', 'in']
   if (!opts || !props.every(function (prop) { return opts.hasOwnProperty(prop) })) {
-    throw new Error('Must pass in options with `in`, `out`, and `html` properties')
+    throw new Error('Must pass in options with `in`, `out` properties')
   }
 }
 
