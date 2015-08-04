@@ -4,13 +4,15 @@
   "description": "AncestorCloud's opinionated, configurable webpack set up for developing & deploying javascript applications using ES2015.",
   "main": "index.js",
   "dependencies": {
-    "extract-text-webpack-plugin": "~0.8.2",
-    "cssnext": "~1.8.2",
     "compression-webpack-plugin": "~0.2.0",
+    "cssnext": "~1.8.2",
+    "extract-text-webpack-plugin": "~0.8.2",
     "lodash.defaults": "~3.1.2",
     "path": "~0.11.14",
     "postcss-import": "~6.2.0",
-    "webpack": "~1.10.5"
+    "react-hot-loader": "~1.2.8",
+    "webpack": "~1.10.5",
+    "webpack-dev-server": "~1.10.1"
   },
   "devDependencies": {},
   "scripts": {
