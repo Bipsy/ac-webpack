@@ -13,13 +13,13 @@
   },
   "devDependencies": {},
   "peerDepencies": {
-    "babel-loader": "~5.3.2",
-    "css-loader": "~0.15.5",
-    "postcss-loader": "~0.5.1",
-    "style-loader": "~0.12.3",
-    "url-loader": "~0.5.5",
-    "react-hot-loader": "~1.2.5",
-    "webpack-dev-server": "^1.10.1"
+    "babel-loader": "*",
+    "css-loader": "*",
+    "postcss-loader": "*",
+    "style-loader": "*",
+    "url-loader": "*",
+    "react-hot-loader": "*",
+    "webpack-dev-server": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
