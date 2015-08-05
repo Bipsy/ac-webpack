@@ -12,7 +12,7 @@
     "postcss-import": "~6.2.0"
   },
   "devDependencies": {},
-  "peerDepencies": {
+  "peerDependencies": {
     "babel-loader": "*",
     "css-loader": "*",
     "postcss-loader": "*",
