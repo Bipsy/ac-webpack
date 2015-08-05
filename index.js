@@ -28,7 +28,7 @@ module.exports = function (opts) {
       filename: opts.isDev ? 'bundle.js' : '[name].[hash].js',
       cssFilename: opts.isDev ? 'style.css' : 'style.[hash].css'
     },
-    resolves: null,
+    resolves: [],
     isDev: isDev,
     html: {}
   })
