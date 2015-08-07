@@ -15,7 +15,7 @@ module.exports = function (opts) {
 
   var appPath = path.resolve(opts.in)
   var outputFolder = path.resolve(opts.out)
-  var config, plugins
+  var config, plugins, stylePathResolves
 
   /**
    * Set the specifications from webpack.config
@@ -28,6 +28,9 @@ module.exports = function (opts) {
       filename: opts.isDev ? 'bundle.js' : '[name].[hash].js',
       cssFilename: opts.isDev ? 'style.css' : 'style.[hash].css'
     },
+    stylePath: './',
+    host: 'localhost',
+    port: 8080,
     resolves: [],
     isDev: isDev,
     html: {}
@@ -35,6 +38,12 @@ module.exports = function (opts) {
 
   config = getBaseConfig(spec)
   plugins = _getPlugins(spec.isDev)
+
+  // sass loader requires we specify paths to check for imports
+  stylePathResolves = (
+    'includePaths[]=' + path.resolve(spec.stylePath) + '&' +
+    'includePaths[]=' + path.resolve('./node_modules')
+  )
 
   if (spec.isDev) {
 
@@ -49,10 +58,16 @@ module.exports = function (opts) {
       'webpack/hot/dev-server',
       'webpack-dev-server/client?http://' + spec.host + ':' + spec.port
     )
-    config.module.loaders.push({
-      test: /(\.css)$/,
-      loader: 'style!css!postcss'
-    })
+    config.module.loaders.push(
+      {
+        test: /(\.css)$/,
+        loader: 'style!css!postcss'
+      },
+      {
+        test: /(\.scss)$/,
+        loader: 'style!css!sass?outputStyle=expanded&' + stylePathResolves
+      }
+    )
 
   } else {
 
@@ -74,13 +89,22 @@ module.exports = function (opts) {
       })
     ])
 
-    config.module.loaders.push({
-      test: /(\.css)$/,
-      loader: ExtractTextPlugin.extract(
-        'style',
-        'css!postcss'
-      )
-    })
+    config.module.loaders.push(
+      {
+        test: /(\.css)$/,
+        loader: ExtractTextPlugin.extract(
+          'style',
+          'css!postcss'
+        )
+      },
+      {
+        test: /(\.scss)$/,
+        loader: ExtractTextPlugin.extract(
+          'style',
+          'css!postcss!sass?outputStyle=expanded&' + stylePathResolves
+        )
+      }
+    )
 
   }
 
