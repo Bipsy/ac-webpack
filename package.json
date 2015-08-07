@@ -1,6 +1,6 @@
 {
   "name": "ac-webpack",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "AncestorCloud's opinionated, configurable webpack set up for developing & deploying javascript applications using ES2015.",
   "main": "index.js",
   "dependencies": {
