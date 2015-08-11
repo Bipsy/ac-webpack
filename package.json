@@ -19,7 +19,8 @@
     "style-loader": "*",
     "url-loader": "*",
     "react-hot-loader": "*",
-    "webpack-dev-server": "*"
+    "webpack-dev-server": "*",
+    "babel-runtime": "5.8.20"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
