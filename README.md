@@ -173,3 +173,13 @@ html: {
 
 #### resolves
 
+#### cssModules
+
+CSS module mode is turned off by default. 
+
+``` js
+
+cssModules: true
+
+```
+

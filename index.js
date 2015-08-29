@@ -15,7 +15,7 @@ module.exports = function (opts) {
 
   var appPath = path.resolve(opts.in)
   var outputFolder = path.resolve(opts.out)
-  var config, plugins, stylePathResolves
+  var config, plugins, stylePathResolves, cssLoaderOptions
 
   /**
    * Set the specifications from webpack.config
@@ -29,6 +29,7 @@ module.exports = function (opts) {
       cssFilename: opts.isDev ? 'style.css' : 'style.[hash].css'
     },
     stylePath: './',
+    cssModules: false,
     host: 'localhost',
     port: 8080,
     resolves: [],
@@ -44,6 +45,11 @@ module.exports = function (opts) {
     'includePaths[]=' + path.resolve(spec.stylePath) + '&' +
     'includePaths[]=' + path.resolve('./node_modules')
   )
+
+  var cssLocalIdentName = 'localIdentName=[local]__[hash:base64:5]'
+  cssLoaderOptions = spec.cssModules
+    ? '?modules&' + cssLocalIdentName
+    : '?' + cssLocalIdentName
 
   if (spec.isDev) {
 
@@ -61,11 +67,11 @@ module.exports = function (opts) {
     config.module.loaders.push(
       {
         test: /(\.css)$/,
-        loader: 'style!css!postcss'
+        loader: 'style!css' + cssLoaderOptions + '!postcss'
       },
       {
         test: /(\.scss)$/,
-        loader: 'style!css!sass?outputStyle=expanded&' + stylePathResolves
+        loader: 'style!css' + cssLoaderOptions + '!sass?outputStyle=expanded&' + stylePathResolves
       }
     )
 
@@ -94,14 +100,14 @@ module.exports = function (opts) {
         test: /(\.css)$/,
         loader: ExtractTextPlugin.extract(
           'style',
-          'css!postcss'
+          'css' + cssLoaderOptions + '!postcss'
         )
       },
       {
         test: /(\.scss)$/,
         loader: ExtractTextPlugin.extract(
           'style',
-          'css!postcss!sass?outputStyle=expanded&' + stylePathResolves
+          'css' + cssLoaderOptions + '!postcss!sass?outputStyle=expanded&' + stylePathResolves
         )
       }
     )
