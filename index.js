@@ -4,10 +4,24 @@ var defaults = require('lodash.defaults')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CompressionPlugin = require('compression-webpack-plugin')
 var getBaseConfig = require('./lib/base-config')
+var devEnvs = [
+  'development',
+  'dev',
+  'test'
+]
 
-// figure out if we're running `webpack` or `webpack-dev-server`
-// we'll use this as the default for `isDev`
-var isDev = process.argv[1].indexOf('webpack-dev-server') !== -1
+var isDev = useDev()
+
+/**
+ * figure out if we're running `webpack` or `webpack-dev-server`
+ */
+function useDev () {
+  return devEnvs.some(isEnv) || process.argv[1].indexOf('webpack-dev-server') !== -1
+}
+
+function isEnv (env) {
+  return process.env.NODE_ENV === env
+}
 
 module.exports = function (opts) {
 
