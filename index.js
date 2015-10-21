@@ -149,7 +149,11 @@ function _getPlugins (isDev) {
 
 function _getDevPlugins () {
   return [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+
+    new webpack.DefinePlugin({
+      '__DEV__': true
+    })
   ]
 }
 
