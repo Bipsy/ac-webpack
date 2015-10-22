@@ -182,7 +182,8 @@ function _getProductionPlugins () {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-      }
+      },
+      '__DEV__': false
     }),
 
     /**
