@@ -152,7 +152,8 @@ function _getDevPlugins () {
     new webpack.HotModuleReplacementPlugin(),
 
     new webpack.DefinePlugin({
-      '__DEV__': true
+      '__DEV__': true,
+      '__PROD__': false
     })
   ]
 }
@@ -183,7 +184,8 @@ function _getProductionPlugins () {
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       },
-      '__DEV__': false
+      '__DEV__': false,
+      '__PROD__': true
     }),
 
     /**
