@@ -10,7 +10,13 @@ var devEnvs = [
   'test'
 ]
 
+var prodEnvs = [
+  'production',
+  'prod'
+]
+
 var isDev = useDev()
+var isProd = prodEnvs.some(isEnv)
 
 /**
  * figure out if we're running `webpack` or `webpack-dev-server`
@@ -152,8 +158,8 @@ function _getDevPlugins () {
     new webpack.HotModuleReplacementPlugin(),
 
     new webpack.DefinePlugin({
-      '__DEV__': true,
-      '__PROD__': false
+      '__DEV__': isDev,
+      '__PROD__': isProd
     })
   ]
 }
@@ -184,8 +190,8 @@ function _getProductionPlugins () {
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       },
-      '__DEV__': false,
-      '__PROD__': true
+      '__DEV__': isDev,
+      '__PROD__': isProd
     }),
 
     /**
